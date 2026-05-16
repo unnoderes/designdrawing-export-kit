@@ -27,6 +27,9 @@ export function findPlantUmlJar() {
     '/opt/plantuml/plantuml.jar',
     '/usr/local/bin/plantuml.jar',
     '/usr/share/plantuml/plantuml.jar',
+    '/usr/share/java/plantuml.jar',
+    '/usr/local/share/plantuml.jar',
+    '/usr/bin/plantuml.jar',
   ];
 
   for (const p of candidates) {

@@ -1,6 +1,19 @@
-import { installNpm, installWinget, downloadJar } from '../utils/installer.mjs';
+import { installNpm, installSystemPackage, downloadJar } from '../utils/installer.mjs';
 import { showConfirmDialog } from '../utils/dialogs.mjs';
 import fs from 'fs';
+import os from 'os';
+
+const PLATFORM = os.platform();
+
+const WINGET_LINUX_MAP = {
+  'Graphviz.Graphviz': {
+    apt: 'graphviz',
+    dnf: 'graphviz',
+    pacman: 'graphviz',
+    yum: 'graphviz',
+    zypper: 'graphviz'
+  }
+};
 
 export async function install(what) {
   const [type, pkg] = what.split(':');
@@ -17,10 +30,21 @@ export async function install(what) {
   if (type === 'winget') {
     const ok = showConfirmDialog(
       '安装缺失依赖',
-      `检测到缺少 ${pkg}。\n\n是否通过 winget 自动安装？`
+      `检测到缺少 ${pkg}。\n\n是否自动安装 / 显示安装命令？`
     );
     if (!ok) { console.log('用户取消了安装。'); return false; }
-    return installWinget(pkg);
+
+    if (PLATFORM === 'win32') {
+      return installSystemPackage(pkg);
+    }
+
+    const mapping = WINGET_LINUX_MAP[pkg];
+    if (mapping) {
+      return installSystemPackage(pkg, mapping);
+    }
+
+    console.log(`winget package "${pkg}" has no known Linux mapping. Please install manually.`);
+    return false;
   }
 
   if (type === 'jar') {
