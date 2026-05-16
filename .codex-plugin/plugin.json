@@ -1,0 +1,34 @@
+{
+  "name": "designdrawing-export-kit",
+  "description": "Local diagram rendering skills for Mermaid and PlantUML.",
+  "author": {
+    "name": "unnoderes",
+    "url": "https://github.com/unnoderes"
+  },
+  "homepage": "https://github.com/unnoderes/designdrawing-export-kit",
+  "repository": "https://github.com/unnoderes/designdrawing-export-kit",
+  "license": "MIT",
+  "keywords": [
+    "agent",
+    "skills",
+    "mermaid",
+    "plantuml",
+    "diagram"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Designdrawing Export Kit",
+    "shortDescription": "Mermaid and PlantUML local rendering skills",
+    "longDescription": "Use mermaid-render to render Mermaid diagrams (.mmd) to SVG/PNG/PDF using a local Chrome/Edge/Chromium browser. Use plantuml-render to render PlantUML diagrams (.puml) to PNG/SVG/PDF/EPS using Java runtime.",
+    "developerName": "unnoderes",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/unnoderes/designdrawing-export-kit",
+    "defaultPrompt": [
+      "Use Designdrawing Export Kit to choose Mermaid or PlantUML diagram rendering."
+    ]
+  }
+}

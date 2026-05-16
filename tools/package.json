@@ -1,0 +1,17 @@
+{
+  "name": "designdrawing-export-kit-tools",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Shared tools for designdrawing-export-kit: dialogs, shell runner, dependency installer, and environment reporter.",
+  "bin": {
+    "dde-tools": "./bin/dde-tools.mjs"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": ["tools", "skills", "cli", "installer"],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

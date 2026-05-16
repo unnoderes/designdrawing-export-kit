@@ -1,0 +1,17 @@
+{
+  "name": "designdrawing-export-kit",
+  "description": "Local diagram rendering skills for Mermaid and PlantUML.",
+  "author": {
+    "name": "unnoderes"
+  },
+  "homepage": "https://github.com/unnoderes/designdrawing-export-kit",
+  "repository": "https://github.com/unnoderes/designdrawing-export-kit",
+  "license": "MIT",
+  "keywords": [
+    "agent",
+    "skills",
+    "mermaid",
+    "plantuml",
+    "diagram"
+  ]
+}

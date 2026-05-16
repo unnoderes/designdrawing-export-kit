@@ -1,0 +1,16 @@
+{
+  "name": "designdrawing-export-kit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A monorepo of local diagram rendering skills: mermaid-render and plantuml-render, with pre-flight environment checks and auto-discovery.",
+  "scripts": {
+    "test": "node --test",
+    "check:mermaid": "node skills/mermaid-render/scripts/mermaid-render.mjs --check",
+    "check:plantuml": "node skills/plantuml-render/scripts/plantuml-render.mjs --check"
+  },
+  "keywords": ["mermaid", "plantuml", "diagram", "render", "skills", "cli"],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

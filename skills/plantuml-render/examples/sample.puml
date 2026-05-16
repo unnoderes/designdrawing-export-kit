@@ -1,0 +1,13 @@
+@startuml
+!theme plain
+
+actor User
+participant "Web Server" as WS
+participant "Database" as DB
+
+User -> WS : Send Request
+WS -> DB : Query Data
+DB --> WS : Return Result
+WS --> User : Show Response
+
+@enduml
