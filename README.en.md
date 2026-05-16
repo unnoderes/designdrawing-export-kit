@@ -154,10 +154,6 @@ flowchart TD
     C --> D
 ```
 
-**Rendered Output**:
-
-![Mermaid Sample](docs/images/mermaid-sample.svg)
-
 ---
 
 ### PlantUML Sequence Diagram
@@ -176,10 +172,6 @@ DB --> WS : Return Result
 WS --> User : Show Response
 @enduml
 ```
-
-**Rendered Output**:
-
-![PlantUML Sample](docs/images/plantuml-sample.svg)
 
 ---
 
