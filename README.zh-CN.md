@@ -1,5 +1,7 @@
 # Designdrawing Export Kit
 
+**[English](README.md) | [中文](README.zh-CN.md)**
+
 本地图表渲染技能套件，支持 Mermaid 和 PlantUML 的离线渲染。
 
 ## 技能列表

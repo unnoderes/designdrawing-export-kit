@@ -1,35 +1,37 @@
 # Designdrawing Export Kit
 
+**[English](README.md) | [中文](README.zh-CN.md)**
+
 > **Local-first diagram rendering skills for Mermaid and PlantUML**
 
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-blue)](https://nodejs.org/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-一个面向本地工作环境的图表渲染工具套件，支持 **Mermaid** 和 **PlantUML** 两大主流图表语法，具备**环境预检、缺失依赖弹窗提示、一键自动安装**能力。
+A local-first diagram rendering toolkit supporting **Mermaid** and **PlantUML** — the two mainstream diagram syntaxes — with **environment pre-flight checks, missing-dependency native dialogs, and one-click auto-installation**.
 
 ---
 
-## 功能特性
+## Features
 
-| 特性 | mermaid-render | plantuml-render |
+| Feature | mermaid-render | plantuml-render |
 |---|---|---|
-| 引擎 | Chromium + Puppeteer | Java + Graphviz |
-| 输出格式 | SVG / PNG / PDF | PNG / SVG / PDF / EPS |
-| 环境预检 | 自动检查 Node / npm / mmdc / 浏览器 | 自动检查 Java / Graphviz / plantuml.jar |
-| 缺失依赖提示 | Windows 原生弹窗 (Yes/No) | Windows 原生弹窗 (Yes/No) |
-| 自动安装 | `npm install -g` | `winget install` + 自动下载 jar |
-| 离线可用 | 浏览器安装后完全离线 | Java 安装后完全离线 |
+| Engine | Chromium + Puppeteer | Java + Graphviz |
+| Output formats | SVG / PNG / PDF | PNG / SVG / PDF / EPS |
+| Environment check | Auto-detects Node / npm / mmdc / browser | Auto-detects Java / Graphviz / plantuml.jar |
+| Missing dependency prompt | Native Windows dialog (Yes/No) | Native Windows dialog (Yes/No) |
+| Auto-installation | `npm install -g` | `winget install` + auto-download jar |
+| Offline capable | Fully offline after browser setup | Fully offline after Java setup |
 
 ---
 
-## 目录结构
+## Directory Structure
 
 ```
 Designdrawing-Export-kit/
-├── .claude-plugin/          # Claude 插件元数据
-├── .codex-plugin/           # Codex 插件元数据
+├── .claude-plugin/          # Claude plugin metadata
+├── .codex-plugin/           # Codex plugin metadata
 ├── docs/
-│   ├── images/              # 示例渲染图
+│   ├── images/              # Sample rendered diagrams
 │   │   ├── mermaid-sample.svg
 │   │   └── plantuml-sample.svg
 │   └── diagram-rendering-guide.md
@@ -60,9 +62,9 @@ Designdrawing-Export-kit/
 │               ├── plantuml-finder.mjs
 │               ├── env-check.mjs
 │               └── render.mjs
-└── tools/                    # 共享工具层
+└── tools/                    # Shared tooling layer
     ├── bin/
-    │   └── dde-tools.mjs    # 统一 CLI 入口
+    │   └── dde-tools.mjs    # Unified CLI entrypoint
     └── src/
         ├── commands/
         │   ├── install.mjs
@@ -76,9 +78,9 @@ Designdrawing-Export-kit/
 
 ---
 
-## 快速开始
+## Quick Start
 
-### 1. 环境检查
+### 1. Environment Check
 
 ```bash
 # Mermaid
@@ -88,21 +90,21 @@ node skills/mermaid-render/scripts/mermaid-render.mjs --check
 node skills/plantuml-render/scripts/plantuml-render.mjs --check
 ```
 
-检查通过后可直接渲染。若缺失依赖，会弹出 Windows 原生对话框询问是否自动安装：
+Once the check passes, rendering is ready. If dependencies are missing, a native Windows dialog will ask whether to install them automatically:
 
 ```
 +--------------------------------------------------+
-| 安装缺失依赖                                      |
+| Install Missing Dependencies                      |
 +--------------------------------------------------+
-| 检测到缺少 Graphviz (dot)。                      |
+| Graphviz (dot) is missing.                       |
 |                                                  |
-| 是否通过 winget 自动安装？                      |
+| Would you like to install via winget?            |
 +--------------------------------------------------+
-| [  是(Y)  ]    [  否(N)  ]                      |
+| [  Yes(Y)  ]    [  No(N)  ]                      |
 +--------------------------------------------------+
 ```
 
-### 2. 渲染图表
+### 2. Render Diagrams
 
 ```bash
 # Mermaid -> SVG
@@ -115,22 +117,22 @@ node skills/plantuml-render/scripts/plantuml-render.mjs \
   skills/plantuml-render/examples/sample.puml \
   output.svg -t svg
 
-# PlantUML -> PNG (默认)
+# PlantUML -> PNG (default)
 node skills/plantuml-render/scripts/plantuml-render.mjs \
   skills/plantuml-render/examples/sample.puml \
   output.png
 ```
 
-### 3. 修复 / 手动安装
+### 3. Fix / Manual Installation
 
 ```bash
-# 仅生成 Puppeteer 配置文件
+# Generate Puppeteer config only
 node skills/mermaid-render/scripts/mermaid-render.mjs --fix
 
-# 仅下载 plantuml.jar
+# Download plantuml.jar only
 node skills/plantuml-render/scripts/plantuml-render.mjs --fix
 
-# 通过 tools 层安装任意依赖
+# Install arbitrary dependencies via the tools layer
 node tools/bin/dde-tools.mjs install npm:@mermaid-js/mermaid-cli
 node tools/bin/dde-tools.mjs install winget:Graphviz.Graphviz
 node tools/bin/dde-tools.mjs install jar:plantuml
@@ -138,29 +140,29 @@ node tools/bin/dde-tools.mjs install jar:plantuml
 
 ---
 
-## 示例预览
+## Sample Previews
 
-### Mermaid 流程图
+### Mermaid Flowchart
 
-**源码** (`skills/mermaid-render/examples/sample.mmd`):
+**Source** (`skills/mermaid-render/examples/sample.mmd`):
 
 ```mermaid
 flowchart TD
-    A[开始] --> B{判断}
-    B -->|是| C[执行操作]
-    B -->|否| D[结束]
+    A[Start] --> B{Decision}
+    B -->|Yes| C[Execute Action]
+    B -->|No| D[End]
     C --> D
 ```
 
-**渲染结果**:
+**Rendered Output**:
 
-![Mermaid 示例](docs/images/mermaid-sample.svg)
+![Mermaid Sample](docs/images/mermaid-sample.svg)
 
 ---
 
-### PlantUML 时序图
+### PlantUML Sequence Diagram
 
-**源码** (`skills/plantuml-render/examples/sample.puml`):
+**Source** (`skills/plantuml-render/examples/sample.puml`):
 
 ```plantuml
 @startuml
@@ -175,49 +177,49 @@ WS --> User : Show Response
 @enduml
 ```
 
-**渲染结果**:
+**Rendered Output**:
 
-![PlantUML 示例](docs/images/plantuml-sample.svg)
+![PlantUML Sample](docs/images/plantuml-sample.svg)
 
 ---
 
-## 工具层 (tools/)
+## Tooling Layer (`tools/`)
 
-`tools/` 是所有 skill 的共享基础设施，避免重复代码：
+`tools/` is the shared infrastructure across all skills to avoid code duplication:
 
-| 工具 | 功能 | 被使用 |
+| Tool | Purpose | Consumed By |
 |---|---|---|
-| `dialogs.mjs` | Windows 原生 Yes/No / Info 弹窗 | `check.mjs` |
-| `shell-runner.mjs` | 命令执行封装 (sync/async) | `installer.mjs` |
-| `installer.mjs` | `npm` / `winget` / `jar` 安装 | `check.mjs`, `dde-tools.mjs` |
-| `env-reporter.mjs` | 统一格式化环境报告 | `check.mjs` |
+| `dialogs.mjs` | Native Windows Yes/No / Info dialogs | `check.mjs` |
+| `shell-runner.mjs` | Command execution wrapper (sync/async) | `installer.mjs` |
+| `installer.mjs` | `npm` / `winget` / `jar` installation | `check.mjs`, `dde-tools.mjs` |
+| `env-reporter.mjs` | Unified environment report formatting | `check.mjs` |
 
 ---
 
-## 环境要求
+## Requirements
 
 ### Mermaid
 
 - Node.js >= 18
-- npm (随 Node.js 附带)
+- npm (bundled with Node.js)
 - Google Chrome / Microsoft Edge / Chromium
-- `@mermaid-js/mermaid-cli` (全局或 npx 可用)
+- `@mermaid-js/mermaid-cli` (globally or available via npx)
 
 ### PlantUML
 
-- Node.js >= 18 (仅 wrapper CLI 需要)
+- Node.js >= 18 (required by the wrapper CLI only)
 - Java JRE >= 8
-- Graphviz (可选但推荐，类图/状态图/组件图必需)
-- plantuml.jar (`--fix` 自动下载)
+- Graphviz (optional but recommended; required for class/state/component diagrams)
+- plantuml.jar (auto-downloaded via `--fix`)
 
 ---
 
-## 插件支持
+## Plugin Support
 
 - **Claude**: `.claude-plugin/plugin.json`
 - **Codex**: `.codex-plugin/plugin.json`
 
-安装后可直接通过对话触发渲染 skill。
+Once installed, rendering skills can be triggered directly via conversation.
 
 ---
 
