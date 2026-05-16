@@ -18,8 +18,8 @@ A local-first diagram rendering toolkit supporting **Mermaid** and **PlantUML** 
 | Engine | Chromium + Puppeteer | Java + Graphviz |
 | Output formats | SVG / PNG / PDF | PNG / SVG / PDF / EPS |
 | Environment check | Auto-detects Node / npm / mmdc / browser | Auto-detects Java / Graphviz / plantuml.jar |
-| Missing dependency prompt | Native Windows dialog (Yes/No) | Native Windows dialog (Yes/No) |
-| Auto-installation | `npm install -g` | `winget install` + auto-download jar |
+| Missing dependency prompt | Native Windows dialog / Linux zenity/kdialog/terminal prompt | Native Windows dialog / Linux zenity/kdialog/terminal prompt |
+| Auto-installation | `npm install -g` (cross-platform) | `winget` (Windows) / package manager hint (Linux) + auto-download jar |
 | Offline capable | Fully offline after browser setup | Fully offline after Java setup |
 
 ---
@@ -90,7 +90,7 @@ node skills/mermaid-render/scripts/mermaid-render.mjs --check
 node skills/plantuml-render/scripts/plantuml-render.mjs --check
 ```
 
-Once the check passes, rendering is ready. If dependencies are missing, a native Windows dialog will ask whether to install them automatically:
+Once the check passes, rendering is ready. If dependencies are missing, a dialog (native Windows popup / Linux zenity/kdialog/terminal prompt) will ask whether to install them:
 
 ```
 +--------------------------------------------------+
@@ -98,11 +98,13 @@ Once the check passes, rendering is ready. If dependencies are missing, a native
 +--------------------------------------------------+
 | Graphviz (dot) is missing.                       |
 |                                                  |
-| Would you like to install via winget?            |
+| Would you like to install / show install cmd?    |
 +--------------------------------------------------+
 | [  Yes(Y)  ]    [  No(N)  ]                      |
 +--------------------------------------------------+
 ```
+
+> **Linux tip:** If `zenity` or `kdialog` is installed, a graphical dialog appears; otherwise it falls back to a terminal `[Y/n]` prompt. System-level dependencies (e.g. Graphviz) are **not** auto-installed; the tool prints the exact command for your distro (e.g. `sudo apt-get install -y graphviz`) for you to copy and run manually.
 
 ### 2. Render Diagrams
 
@@ -181,9 +183,9 @@ WS --> User : Show Response
 
 | Tool | Purpose | Consumed By |
 |---|---|---|
-| `dialogs.mjs` | Native Windows Yes/No / Info dialogs | `check.mjs` |
+| `dialogs.mjs` | Cross-platform dialogs (Windows native / Linux zenity/kdialog/terminal) | `check.mjs` |
 | `shell-runner.mjs` | Command execution wrapper (sync/async) | `installer.mjs` |
-| `installer.mjs` | `npm` / `winget` / `jar` installation | `check.mjs`, `dde-tools.mjs` |
+| `installer.mjs` | `npm` (cross-platform) / `winget` (Windows) / package manager hint (Linux) / `jar` download | `check.mjs`, `dde-tools.mjs` |
 | `env-reporter.mjs` | Unified environment report formatting | `check.mjs` |
 
 ---
@@ -203,6 +205,8 @@ WS --> User : Show Response
 - Java JRE >= 8
 - Graphviz (optional but recommended; required for class/state/component diagrams)
 - plantuml.jar (auto-downloaded via `--fix`)
+
+> **Linux users:** Please install system dependencies (Java, Graphviz, Chrome/Chromium) via your distribution package manager beforehand. The tool auto-detects them and prints recommended commands, but will not execute `sudo` installs directly.
 
 ---
 

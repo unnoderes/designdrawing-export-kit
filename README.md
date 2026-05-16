@@ -18,8 +18,8 @@
 | 引擎 | Chromium + Puppeteer | Java + Graphviz |
 | 输出格式 | SVG / PNG / PDF | PNG / SVG / PDF / EPS |
 | 环境预检 | 自动检查 Node / npm / mmdc / 浏览器 | 自动检查 Java / Graphviz / plantuml.jar |
-| 缺失依赖提示 | Windows 原生弹窗 (Yes/No) | Windows 原生弹窗 (Yes/No) |
-| 自动安装 | `npm install -g` | `winget install` + 自动下载 jar |
+| 缺失依赖提示 | Windows 原生弹窗 / Linux zenity/kdialog/终端提示 | Windows 原生弹窗 / Linux zenity/kdialog/终端提示 |
+| 自动安装 | `npm install -g` (跨平台) | `winget` (Windows) / 包管理器命令提示 (Linux) + 自动下载 jar |
 | 离线可用 | 浏览器安装后完全离线 | Java 安装后完全离线 |
 
 ---
@@ -90,7 +90,7 @@ node skills/mermaid-render/scripts/mermaid-render.mjs --check
 node skills/plantuml-render/scripts/plantuml-render.mjs --check
 ```
 
-检查通过后可直接渲染。若缺失依赖，会弹出 Windows 原生对话框询问是否自动安装：
+检查通过后可直接渲染。若缺失依赖，会弹出对话框（Windows 原生弹窗 / Linux zenity/kdialog/终端提示）询问是否自动安装：
 
 ```
 +--------------------------------------------------+
@@ -98,11 +98,13 @@ node skills/plantuml-render/scripts/plantuml-render.mjs --check
 +--------------------------------------------------+
 | 检测到缺少 Graphviz (dot)。                      |
 |                                                  |
-| 是否通过 winget 自动安装？                      |
+| 是否自动安装 / 显示安装命令？                    |
 +--------------------------------------------------+
 | [  是(Y)  ]    [  否(N)  ]                      |
 +--------------------------------------------------+
 ```
+
+> **Linux 用户提示：** 若已安装 `zenity` 或 `kdialog`，将显示图形对话框；否则退化为终端 `[Y/n]` 交互。系统级依赖（如 Graphviz）不会自动执行安装，仅会打印对应发行版的精确安装命令（如 `sudo apt-get install -y graphviz`），请复制后手动执行。
 
 ### 2. 渲染图表
 
@@ -181,9 +183,9 @@ WS --> User : Show Response
 
 | 工具 | 功能 | 被使用 |
 |---|---|---|
-| `dialogs.mjs` | Windows 原生 Yes/No / Info 弹窗 | `check.mjs` |
+| `dialogs.mjs` | 跨平台弹窗 (Windows 原生 / Linux zenity/kdialog/终端) | `check.mjs` |
 | `shell-runner.mjs` | 命令执行封装 (sync/async) | `installer.mjs` |
-| `installer.mjs` | `npm` / `winget` / `jar` 安装 | `check.mjs`, `dde-tools.mjs` |
+| `installer.mjs` | `npm` (跨平台) / `winget` (Windows) / 包管理器提示 (Linux) / `jar` 下载 | `check.mjs`, `dde-tools.mjs` |
 | `env-reporter.mjs` | 统一格式化环境报告 | `check.mjs` |
 
 ---
@@ -203,6 +205,8 @@ WS --> User : Show Response
 - Java JRE >= 8
 - Graphviz (可选但推荐，类图/状态图/组件图必需)
 - plantuml.jar (`--fix` 自动下载)
+
+> **Linux 用户：** 系统依赖（Java、Graphviz、Chrome/Chromium）请通过发行版包管理器提前安装。工具运行时会自动检测并打印推荐命令，但不会直接执行 `sudo` 安装操作。
 
 ---
 

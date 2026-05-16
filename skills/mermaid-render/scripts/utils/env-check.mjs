@@ -38,7 +38,7 @@ function checkMermaidCli() {
     }
   }
 
-  const npxOk = safeExec('npx --yes @mermaid-js/mermaid-cli --version 2>NUL || echo npx-ok-placeholder') !== null;
+  const npxOk = safeExec('npx --yes @mermaid-js/mermaid-cli --version || echo npx-ok-placeholder') !== null;
 
   const ok = !!mmdcPath || npxOk;
   return {

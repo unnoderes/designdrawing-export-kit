@@ -1,7 +1,7 @@
 import { runAllChecks } from '../utils/env-check.mjs';
 import { printReport } from '../../../../tools/src/utils/env-reporter.mjs';
 import { showConfirmDialog, showInfoDialog } from '../../../../tools/src/utils/dialogs.mjs';
-import { installWinget, downloadJar } from '../../../../tools/src/utils/installer.mjs';
+import { installSystemPackage, downloadJar } from '../../../../tools/src/utils/installer.mjs';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
@@ -27,11 +27,17 @@ export async function check() {
     if (!gvCheck.ok) {
       const ok = showConfirmDialog(
         '安装缺失依赖',
-        '检测到缺少 Graphviz (dot)。\n\n是否通过 winget 自动安装？'
+        '检测到缺少 Graphviz (dot)。\n\n是否自动安装 / 显示安装命令？'
       );
       if (ok) {
         try {
-          await installWinget('Graphviz.Graphviz');
+          await installSystemPackage('Graphviz.Graphviz', {
+            apt: 'graphviz',
+            dnf: 'graphviz',
+            pacman: 'graphviz',
+            yum: 'graphviz',
+            zypper: 'graphviz'
+          });
           report = runAllChecks();
           printReport('PlantUML CLI Environment Report', report.checks);
         } catch (err) {
