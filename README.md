@@ -154,10 +154,6 @@ flowchart TD
     C --> D
 ```
 
-**渲染结果**:
-
-![Mermaid 示例](docs/images/mermaid-sample.svg)
-
 ---
 
 ### PlantUML 时序图
@@ -176,10 +172,6 @@ DB --> WS : Return Result
 WS --> User : Show Response
 @enduml
 ```
-
-**渲染结果**:
-
-![PlantUML 示例](docs/images/plantuml-sample.svg)
 
 ---
 
